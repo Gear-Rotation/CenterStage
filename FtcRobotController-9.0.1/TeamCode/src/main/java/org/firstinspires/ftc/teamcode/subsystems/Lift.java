@@ -21,7 +21,6 @@ public class Lift extends Subsystem {
     private Servo block;
     private LinearOpMode opMode;
     private Timer timer;
-
     private DigitalChannel slideTouch;
 
     public static boolean isLiftUp = false;
@@ -90,7 +89,11 @@ public class Lift extends Subsystem {
             if(slide.getCurrentPosition() <= UPPER_BOUND && gamepad2.right_stick_y < 0) {
                 slide.setPower(0);
             } else {
-                slide.setPower(gamepad2.right_stick_y * 0.5);
+                if(slideTouch.getState() && gamepad2.right_stick_y < 0) {
+                    slide.setPower(0);
+                } else {
+                    slide.setPower(gamepad2.right_stick_y * 0.5);
+                }
             }
         } else {
             slide.setPower(0);

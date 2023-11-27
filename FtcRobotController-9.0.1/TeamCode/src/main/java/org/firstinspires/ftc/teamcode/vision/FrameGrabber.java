@@ -36,4 +36,8 @@ public class FrameGrabber {
             public void onError(int errorCode) {}
         });
     }
+
+    public void closeCamera() {
+        camera.closeCameraDevice();
+    }
 }

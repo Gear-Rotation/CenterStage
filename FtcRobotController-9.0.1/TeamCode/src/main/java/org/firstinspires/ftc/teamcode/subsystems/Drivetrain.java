@@ -163,6 +163,7 @@ public class Drivetrain extends Subsystem {
             setPowers(flPower,frPower,blPower,brPower);
 
         }
+         setPowers(0);
     }
     @Override
     public void update() {

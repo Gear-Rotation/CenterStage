@@ -41,7 +41,27 @@ public class Intake extends Subsystem {
 
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        disarmIntake();
+    }
+
+    public void armIntake(){
+        folder.setPosition(0);
+    }
+
+    public void disarmIntake() {
         folder.setPosition(0.5);
+    }
+
+    public void depositPixel() {
+        armIntake();
+        timer.wait(500);
+        timer.resetTimer();
+        while(opMode.opModeIsActive() && timer.getTime() < 2000){
+            intake.setPower(-1);
+        }
+        intake.setPower(0);
+        disarmIntake();
+        timer.wait(500);
     }
 
     @Override
@@ -56,10 +76,10 @@ public class Intake extends Subsystem {
 
         if (folderToggle.status(gamepad1.right_bumper) == UTILToggle.Status.COMPLETE) {
             if (isFolderOpen) {
-                folder.setPosition(0);
+                armIntake();
                 isFolderOpen = false;
             } else {
-                folder.setPosition(0.5);
+                disarmIntake();
                 isFolderOpen = true;
             }
         }
