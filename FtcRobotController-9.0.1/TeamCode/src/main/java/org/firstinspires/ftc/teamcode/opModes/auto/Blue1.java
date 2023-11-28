@@ -80,13 +80,24 @@ public class Blue1 extends AutoOpMode {
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(-38, 43, Math.toRadians(-90)))
                 .build();
+
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(-42, 48, Math.toRadians(-90)))
                 .build();
+
         TrajectorySequence toBoard = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(-28, 48, Math.toRadians(-90)))
                 .build();
-        robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
+
+        if (position == RedFilter.State.LEFT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
+        } else if (position == RedFilter.State.CENTER) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
+        } else {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
+        }
+
+   //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
 
 
         robot.drive.moveBackwardsTouchSensor();

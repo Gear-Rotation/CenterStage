@@ -56,8 +56,9 @@ public class Lift extends Subsystem {
         slide.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //        slide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+//initialization servo placement
         slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        block.setPosition(0.80);
+        block.setPosition(0.6);
     }
 
     // accesbility return name (paramterType parmater ...) {
@@ -74,15 +75,15 @@ public class Lift extends Subsystem {
     public int getCurrentPosition() {
         return slide.getCurrentPosition();
     }
-
+//drops servo onto board
     public void autoDeposit() {
-        block.setPosition(0.65);
+        block.setPosition(0.8);
     }
-
+//closes servo after dropping
     public void autoClose(){
-        block.setPosition(0.80);
+        block.setPosition(0.6);
     }
-
+//telop below
     @Override
     public void update() {
         if (Math.abs(gamepad2.right_stick_y) > 0.05) {
@@ -99,9 +100,9 @@ public class Lift extends Subsystem {
             slide.setPower(0);
         }
         if (gamepad2.right_bumper){
-            block.setPosition(0.65);
+            block.setPosition(0.8);
         } else {
-           block.setPosition(0.80);
+           block.setPosition(0.6);
         }
 
 //        telemetry.addData("slide encoder pos: ", slide.getCurrentPosition());
