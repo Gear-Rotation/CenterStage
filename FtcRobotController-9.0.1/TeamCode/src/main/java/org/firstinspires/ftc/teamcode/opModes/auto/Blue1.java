@@ -78,15 +78,15 @@ public class Blue1 extends AutoOpMode {
         robot.intake.depositPixel();
 
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-38, 43, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-42, 48, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-38, 49, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toBoard = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-28, 48, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-22.4, 50.5, Math.toRadians(-90)))
                 .build();
 
         if (position == RedFilter.State.LEFT) {

@@ -77,7 +77,7 @@ public class Lift extends Subsystem {
     }
 //drops servo onto board
     public void autoDeposit() {
-        block.setPosition(0.8);
+        block.setPosition(0.2);
     }
 //closes servo after dropping
     public void autoClose(){
@@ -100,7 +100,7 @@ public class Lift extends Subsystem {
             slide.setPower(0);
         }
         if (gamepad2.right_bumper){
-            block.setPosition(0.8);
+            block.setPosition(0.2);
         } else {
            block.setPosition(0.6);
         }
