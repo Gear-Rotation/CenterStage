@@ -14,6 +14,7 @@ public class Robot {
     public Lift lift;
 
     public Intake intake;
+    public LinearActuator linearActuator;
 
     private List<Subsystem> subsystems;
     private Telemetry telemetry;
@@ -29,12 +30,14 @@ public class Robot {
         drive = new Drivetrain(opMode, telemetry, initialPose);
         lift = new Lift(opMode, telemetry);
         intake = new Intake(opMode, telemetry);
+        linearActuator = new LinearActuator(opMode, telemetry);
 
         subsystems = new ArrayList<>();
 
         subsystems.add(drive);
         subsystems.add(lift);
         subsystems.add(intake);
+        subsystems.add(linearActuator);
     }
 
     public Robot(LinearOpMode opMode, Telemetry telemetry) {

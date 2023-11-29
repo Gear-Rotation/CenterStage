@@ -49,7 +49,7 @@ public class Intake extends Subsystem {
     }
 
     public void disarmIntake() {
-        folder.setPosition(0.5);
+        folder.setPosition(0.58);
     }
 
     public void depositPixel() {

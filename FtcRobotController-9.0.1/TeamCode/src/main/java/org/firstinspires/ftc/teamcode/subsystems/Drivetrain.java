@@ -167,15 +167,15 @@ public class Drivetrain extends Subsystem {
     }
     @Override
     public void update() {
-//        if (Lift.isLiftUp) {
-//            drivePower = 0.25;
-//        } else {
-//            if (gamepad1.left_trigger > 0.1) {
-//                drivePower = 0.25;
-//            } else {
-//                drivePower = 0.90;
-//            }
-//        }
+        if (Lift.isLiftUp) {
+            drivePower = 0.25;
+        } else {
+            if (gamepad1.left_bumper) {
+                drivePower = 0.25;
+            } else {
+                drivePower = 0.70;
+            }
+        }
 //
 //
         mecanumDrive(drivePower);

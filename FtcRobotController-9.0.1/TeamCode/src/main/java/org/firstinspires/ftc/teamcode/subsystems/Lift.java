@@ -81,29 +81,41 @@ public class Lift extends Subsystem {
     }
 //closes servo after dropping
     public void autoClose(){
-        block.setPosition(0.6);
+        block.setPosition(0.50);
     }
 //telop below
-    @Override
-    public void update() {
-        if (Math.abs(gamepad2.right_stick_y) > 0.05) {
-            if(slide.getCurrentPosition() <= UPPER_BOUND && gamepad2.right_stick_y < 0) {
+@Override
+public void update() {
+        //if the right joystick(vertical) is pushing up
+    if (Math.abs(gamepad2.right_stick_y) > 0.05) {
+        //if the slides position is less than or equal to the limit and the right joystick is push down than the slide should not move
+        if(slide.getCurrentPosition() <= UPPER_BOUND && gamepad2.right_stick_y < 0) {
+            slide.setPower(0);
+        } else {
+            //if the touch sensor is clicked and the right joystick is down set slides power to 0
+            //CHANGE BELOW
+            if(slideTouch.getState() && (Math.abs(gamepad2.right_stick_y) < 0)) {
                 slide.setPower(0);
             } else {
-                if(slideTouch.getState() && gamepad2.right_stick_y < 0) {
-                    slide.setPower(0);
-                } else {
-                    slide.setPower(gamepad2.right_stick_y * 0.5);
-                }
+                //set the slides power to how much the joystick is being pushed from -1,1 * 0.5 power
+                slide.setPower(gamepad2.right_stick_y * 0.5);
             }
-        } else {
-            slide.setPower(0);
         }
-        if (gamepad2.right_bumper){
-            block.setPosition(0.2);
-        } else {
-           block.setPosition(0.6);
-        }
+    } else {
+        //if nothing is being done then set slides power to 0
+        slide.setPower(0);
+    }
+    if (gamepad2.right_bumper){
+        block.setPosition(0.2);
+    } else {
+        block.setPosition(0.50);
+    }
+
+//        if (slideTouch.getState()) {
+//            slide.setPower(0.6);
+//        } else {
+//            slide.setPower(0);
+//        }
 
 //        telemetry.addData("slide encoder pos: ", slide.getCurrentPosition());
 
@@ -112,6 +124,8 @@ public class Lift extends Subsystem {
         telemetry.addData("Gamepad 2 right stick y", gamepad2.right_stick_y);
         telemetry.addData("Current Slide State", slide.getPower());
         telemetry.addData("Encoder Position", slide.getCurrentPosition());
+        telemetry.addData("slide touch",slideTouch.getState());
+
     }
 }
 
