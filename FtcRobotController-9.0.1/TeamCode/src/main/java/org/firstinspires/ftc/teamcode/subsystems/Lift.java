@@ -94,7 +94,7 @@ public void update() {
         } else {
             //if the touch sensor is clicked and the right joystick is down set slides power to 0
             //CHANGE BELOW
-            if(slideTouch.getState() && (Math.abs(gamepad2.right_stick_y) < 0)) {
+            if(slideTouch.getState() && (Math.abs(gamepad2.right_stick_y) > 0)) {
                 slide.setPower(0);
             } else {
                 //set the slides power to how much the joystick is being pushed from -1,1 * 0.5 power
