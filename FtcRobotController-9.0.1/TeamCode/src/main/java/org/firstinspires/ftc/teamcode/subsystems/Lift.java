@@ -58,7 +58,7 @@ public class Lift extends Subsystem {
 
 //initialization servo placement
         slide.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        block.setPosition(0.6);
+        block.setPosition(0.47);
     }
 
     // accesbility return name (paramterType parmater ...) {
@@ -81,7 +81,7 @@ public class Lift extends Subsystem {
     }
 //closes servo after dropping
     public void autoClose(){
-        block.setPosition(0.50);
+        block.setPosition(0.47);
     }
 //telop below
 @Override
@@ -108,7 +108,7 @@ public void update() {
     if (gamepad2.right_bumper){
         block.setPosition(0.2);
     } else {
-        block.setPosition(0.50);
+        block.setPosition(0.47);
     }
 
 //        if (slideTouch.getState()) {
