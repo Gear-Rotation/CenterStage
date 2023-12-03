@@ -66,13 +66,19 @@ public class Intake extends Subsystem {
 
     @Override
     public void update() {
-        if (gamepad1.right_trigger > 0.25) {
-            intake.setPower(gamepad1.right_trigger * 0.5);
+        if (gamepad1.right_trigger > 0.25 || gamepad2.right_trigger > 0.25) {
+            intake.setPower(0.8);
         } else if (gamepad1.left_trigger > 0.25) {
             intake.setPower(gamepad1.left_trigger * -0.5);
         } else {
             intake.setPower(0);
         }
+
+//        if (gamepad2.left_trigger > 0.25) {
+//            intake.setPower(gamepad2.left_trigger * 0.5);
+//        } else {
+//            intake.setPower(0);
+//        }
 
         if(gamepad2.left_trigger > 0.25) {
             folder.setPosition(0);
