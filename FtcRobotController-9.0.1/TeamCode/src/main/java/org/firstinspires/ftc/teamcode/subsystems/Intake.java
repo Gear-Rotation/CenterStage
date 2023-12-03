@@ -74,14 +74,20 @@ public class Intake extends Subsystem {
             intake.setPower(0);
         }
 
-        if (folderToggle.status(gamepad1.right_bumper) == UTILToggle.Status.COMPLETE) {
-            if (isFolderOpen) {
-                armIntake();
-                isFolderOpen = false;
-            } else {
-                disarmIntake();
-                isFolderOpen = true;
-            }
+        if(gamepad2.left_trigger > 0.25) {
+            folder.setPosition(0);
+        } else {
+            folder.setPosition(0.58);
         }
+
+//        if (folderToggle.status(gamepad1.right_bumper) == UTILToggle.Status.COMPLETE) {
+//            if (isFolderOpen) {
+//                armIntake();
+//                isFolderOpen = false;
+//            } else {
+//                disarmIntake();
+//                isFolderOpen = true;
+//            }
+
     }
 }
