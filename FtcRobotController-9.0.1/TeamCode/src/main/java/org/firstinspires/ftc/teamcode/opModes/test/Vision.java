@@ -19,23 +19,23 @@ public class Vision extends AutoOpMode {
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX(),fg.redFilter.offset.getY() + 0.01);
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset.getY() + 0.01);
             }
 
             if (gamepad1.dpad_down) {
-                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX(),fg.redFilter.offset.getY() - 0.01);
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset.getY() - 0.01);
             }
 
             if (gamepad1.dpad_left) {
-                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX() - 0.01,fg.redFilter.offset.getY());
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset1.getX() - 0.01,fg.redFilter.offset.getY());
             }
 
             if (gamepad1.dpad_right) {
-                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX() + 0.01,fg.redFilter.offset.getY());
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset1.getX() + 0.01,fg.redFilter.offset.getY());
             }
 
             telemetry.addData("running", "test");
-            telemetry.addData("test", fg.redFilter.offset);
+            telemetry.addData("test", fg.redFilter.offset1);
             telemetry.update();
         }
     }

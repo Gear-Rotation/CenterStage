@@ -57,7 +57,7 @@ public class Intake extends Subsystem {
         timer.wait(500);
         timer.resetTimer();
         while(opMode.opModeIsActive() && timer.getTime() < 2000){
-            intake.setPower(-1);
+            intake.setPower(-0.6);
         }
         intake.setPower(0);
         disarmIntake();
@@ -67,7 +67,7 @@ public class Intake extends Subsystem {
     @Override
     public void update() {
         if (gamepad1.right_trigger > 0.25 || gamepad2.right_trigger > 0.25) {
-            intake.setPower(0.8);
+            intake.setPower(0.5);
         } else if (gamepad1.left_trigger > 0.25) {
             intake.setPower(gamepad1.left_trigger * -0.5);
         } else {

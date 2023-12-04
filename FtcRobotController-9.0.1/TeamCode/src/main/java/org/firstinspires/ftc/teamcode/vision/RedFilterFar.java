@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.PropertyResourceBundle;
 
 
-public class RedFilter extends OpenCvPipeline {
+public class RedFilterFar extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(290,276);
+    public Vector2d offset = new Vector2d(265,276);
     //right
-    public Vector2d offset1 = new Vector2d(580,278);
+    public Vector2d offset1 = new Vector2d(590,278);
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 
@@ -113,3 +113,6 @@ public class RedFilter extends OpenCvPipeline {
         return input;
     }
 }
+
+
+

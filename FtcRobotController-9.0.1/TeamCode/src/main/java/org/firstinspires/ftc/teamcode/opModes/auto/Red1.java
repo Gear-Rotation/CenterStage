@@ -13,13 +13,14 @@ import org.firstinspires.ftc.teamcode.vision.RedFilter;
 @Autonomous(name = "Red Close")
 public class Red1 extends AutoOpMode {
     Vector2d zoneLeft = new Vector2d(45, 19);
-    Vector2d zoneMiddle = new Vector2d(-278, 287);
+    Vector2d zoneMiddle = new Vector2d(40, 12);
     Vector2d zoneRight = new Vector2d(45, 6);
     RedFilter.State position = RedFilter.State.NOT_FOUND;
 
 
     public Pose2d getInitialPose() {
-        return new Pose2d(64, 10.25, Math.toRadians(0));
+        //change
+        return new Pose2d(64, 3, Math.toRadians(0));
     }
 
     @Override
@@ -123,7 +124,7 @@ public class Red1 extends AutoOpMode {
         }
 
         TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .strafeRight(24)
+                .strafeLeft(24)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
 
@@ -137,4 +138,5 @@ public class Red1 extends AutoOpMode {
         run();
     }
 }
+
 

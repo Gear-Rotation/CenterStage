@@ -16,6 +16,7 @@ public class FrameGrabber {
     private Mat workingMat = new Mat();
     private Mat redMask = new Mat();
     public RedFilter redFilter;
+    public RedFilterFar redFilterFar;
     private Telemetry telemetry;
     private Robot robot;
     private OpenCvCamera camera;
@@ -25,8 +26,12 @@ public class FrameGrabber {
         this.robot = robot;
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+
         redFilter = new RedFilter();
         camera.setPipeline(redFilter);
+
+        redFilterFar = new RedFilterFar();
+        camera.setPipeline(redFilterFar);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
