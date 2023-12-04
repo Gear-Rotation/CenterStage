@@ -7,15 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.vision.FrameGrabber;
-import org.firstinspires.ftc.teamcode.vision.RedFilterFar;
+import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue;
+import org.firstinspires.ftc.teamcode.vision.BlueFilterFar;
 
 @Autonomous(name = "Blue Far")
 public class Blue2 extends AutoOpMode {
     Vector2d zoneLeft = new Vector2d(-43, -40);
     Vector2d zoneMiddle = new Vector2d(-40, -36);
     Vector2d zoneRight = new Vector2d(-45, -30);
-    RedFilterFar.State position = RedFilterFar.State.NOT_FOUND;
+    BlueFilterFar.State position = BlueFilterFar.State.NOT_FOUND;
 
 
     public Pose2d getInitialPose() {
@@ -24,25 +24,25 @@ public class Blue2 extends AutoOpMode {
 
     @Override
     public void setup() {
-        FrameGrabber fg = new FrameGrabber(this, this.robot);
+        FrameGrabberBlue fg = new FrameGrabberBlue(this, this.robot);
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() + 0.001);
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() - 0.001);
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() - 0.001,fg.redFilter.offset1.getY());
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
             }
 
             if (gamepad1.dpad_right) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() + 0.001,fg.redFilter.offset1.getY());
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
             }
 
-            position = fg.redFilterFar.position;
+            position = fg.blueFilterFar.position;
 
             telemetry.addData("position", position);
             telemetry.update();
@@ -71,9 +71,9 @@ public class Blue2 extends AutoOpMode {
                 .forward(4)
                 .build();
 
-        if (position == RedFilterFar.State.RIGHT) {
+        if (position == BlueFilterFar.State.RIGHT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(right);
-        } else if (position == RedFilterFar.State.CENTER) {
+        } else if (position == BlueFilterFar.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(middle);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(left);

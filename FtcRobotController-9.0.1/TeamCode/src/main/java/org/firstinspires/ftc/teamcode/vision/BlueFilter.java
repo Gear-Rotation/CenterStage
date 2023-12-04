@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.vision;
 
-import androidx.core.content.res.FontResourcesParserCompat;
-
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import org.opencv.core.Core;
@@ -15,10 +13,9 @@ import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PropertyResourceBundle;
 
 
-public class RedFilter extends OpenCvPipeline {
+public class BlueFilter extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center

@@ -7,15 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.vision.FrameGrabber;
-import org.firstinspires.ftc.teamcode.vision.RedFilter;
+import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue;
+import org.firstinspires.ftc.teamcode.vision.BlueFilter;
 
 @Autonomous(name = "Red Close")
 public class Red1 extends AutoOpMode {
     Vector2d zoneLeft = new Vector2d(45, 19);
     Vector2d zoneMiddle = new Vector2d(40, 12);
     Vector2d zoneRight = new Vector2d(45, 6);
-    RedFilter.State position = RedFilter.State.NOT_FOUND;
+    BlueFilter.State position = BlueFilter.State.NOT_FOUND;
 
 
     public Pose2d getInitialPose() {
@@ -25,25 +25,25 @@ public class Red1 extends AutoOpMode {
 
     @Override
     public void setup() {
-        FrameGrabber fg = new FrameGrabber(this, this.robot);
+        FrameGrabberBlue fg = new FrameGrabberBlue(this, this.robot);
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() + 0.001);
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() - 0.001);
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() - 0.001,fg.redFilter.offset1.getY());
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
             }
 
             if (gamepad1.dpad_right) {
-                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() + 0.001,fg.redFilter.offset1.getY());
+                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
             }
 
-            position = fg.redFilter.position;
+            position = fg.blueFilter.position;
 
             telemetry.addData("position", position);
             telemetry.update();
@@ -68,9 +68,9 @@ public class Red1 extends AutoOpMode {
                 .forward(4)
                 .build();
 
-        if (position == RedFilter.State.LEFT) {
+        if (position == BlueFilter.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(left);
-        } else if (position == RedFilter.State.CENTER) {
+        } else if (position == BlueFilter.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(middle);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(right);
@@ -90,9 +90,9 @@ public class Red1 extends AutoOpMode {
                 .lineToLinearHeading(new Pose2d(22.4, 50.5, Math.toRadians(-90)))
                 .build();
 
-        if (position == RedFilter.State.LEFT) {
+        if (position == BlueFilter.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
-        } else if (position == RedFilter.State.CENTER) {
+        } else if (position == BlueFilter.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
