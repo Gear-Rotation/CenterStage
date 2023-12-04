@@ -15,7 +15,6 @@ public class FrameGrabberBlue {
     private Mat workingMat = new Mat();
     private Mat redMask = new Mat();
     public BlueFilter blueFilter;
-    public BlueFilterFar blueFilterFar;
     private Telemetry telemetry;
     private Robot robot;
     private OpenCvCamera camera;
@@ -29,8 +28,6 @@ public class FrameGrabberBlue {
         blueFilter = new BlueFilter();
         camera.setPipeline(blueFilter);
 
-        blueFilterFar = new BlueFilterFar();
-        camera.setPipeline(blueFilterFar);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {

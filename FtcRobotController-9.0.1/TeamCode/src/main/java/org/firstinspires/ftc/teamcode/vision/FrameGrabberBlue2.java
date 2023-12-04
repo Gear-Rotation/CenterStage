@@ -14,7 +14,7 @@ public class FrameGrabberBlue2 {
     private Mat displayMat = new Mat();
     private Mat workingMat = new Mat();
     private Mat redMask = new Mat();
-    public BlueFilter blueFilter;
+
     public BlueFilterFar blueFilterFar;
     private Telemetry telemetry;
     private Robot robot;
@@ -26,8 +26,6 @@ public class FrameGrabberBlue2 {
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
-        blueFilter = new BlueFilter();
-        camera.setPipeline(blueFilter);
 
         blueFilterFar = new BlueFilterFar();
         camera.setPipeline(blueFilterFar);
