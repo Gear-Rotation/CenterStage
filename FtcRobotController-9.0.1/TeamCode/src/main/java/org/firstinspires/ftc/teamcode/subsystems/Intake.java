@@ -57,7 +57,7 @@ public class Intake extends Subsystem {
         timer.wait(500);
         timer.resetTimer();
         while(opMode.opModeIsActive() && timer.getTime() < 2000){
-            intake.setPower(-0.6);
+            intake.setPower(-0.4);
         }
         intake.setPower(0);
         disarmIntake();

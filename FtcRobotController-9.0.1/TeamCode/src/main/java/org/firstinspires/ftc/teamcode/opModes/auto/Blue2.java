@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.vision.BlueFilter;
 import org.firstinspires.ftc.teamcode.vision.BlueFilterFar;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
@@ -13,9 +14,9 @@ import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue2;
 
 @Autonomous(name = "Blue Far")
 public class Blue2 extends AutoOpMode {
-    Vector2d zoneLeft = new Vector2d(-43, -40);
-    Vector2d zoneMiddle = new Vector2d(-40, -36);
-    Vector2d zoneRight = new Vector2d(-45, -30);
+    Vector2d zoneRight = new Vector2d(-43, -45.5);
+    Vector2d zoneMiddle = new Vector2d(-38, -36);
+    Vector2d zoneLeft = new Vector2d(-43, -30);
     BlueFilterFar.State position = BlueFilterFar.State.NOT_FOUND;
 
 
@@ -56,7 +57,7 @@ public class Blue2 extends AutoOpMode {
     @Override
     public void run() {
         TrajectorySequence toAlign = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .strafeRight(10)
+                .strafeRight(5)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toAlign);
         int zone = 0;
@@ -82,56 +83,96 @@ public class Blue2 extends AutoOpMode {
 
         robot.intake.depositPixel();
 
-//        TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-//                .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
-//                .build();
-//
-//        TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-//                .lineToLinearHeading(new Pose2d(-38, 49, Math.toRadians(-90)))
-//                .build();
-//
-//        TrajectorySequence toBoard = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-//                .lineToLinearHeading(new Pose2d(-22.4, 50.5, Math.toRadians(-90)))
-//                .build();
-//
-//        if (position == RedFilterFar.State.LEFT) {
-//            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
-//        } else if (position == RedFilterFar.State.CENTER) {
-//            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
-//        } else {
-//            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
-//        }
-//
-//        //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
-//
-//
-//        robot.drive.moveBackwardsTouchSensor();
-//
-//        robot.timer.wait(500);
-//
-//        robot.lift.liftToPosition(-800);
-//        while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
-//            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
-//            telemetry.update();
-//        }
-//
-//        robot.timer.wait(200);
-//
-//        robot.lift.autoDeposit();
-//        robot.timer.wait(1000);
-//        robot.lift.autoClose();
-//
-//        robot.lift.liftToPosition(-100);
-//        while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
-//            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
-//            telemetry.update();
-//        }
-//
-//        TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-//                .strafeLeft(24)
-//                .build();
-//        robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
-//
+        TrajectorySequence toReachBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .strafeRight(12)
+                .forward(36)
+                .lineToLinearHeading(new Pose2d(-12, 0, Math.toRadians(-90)))
+                .build();
+
+        TrajectorySequence toReachBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .back(4)
+                .turn(Math.toRadians(50))
+                .strafeRight(4)
+                .forward(36)
+                .lineToLinearHeading(new Pose2d(-12, 0, Math.toRadians(-90)))
+                .build();
+
+        TrajectorySequence toReachBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                //back up 4 in away from pixel
+                .lineToLinearHeading(new Pose2d(-48, -45.5, Math.toRadians(0)))
+                //strafeleft to get away from pixel
+                .lineToLinearHeading(new Pose2d(-48, -34, Math.toRadians(0)))
+                //forward 30 before turning to lifting door
+                .lineToLinearHeading(new Pose2d(-14, -34, Math.toRadians(0)))
+                //reach center of the field(truss)
+                .lineToLinearHeading(new Pose2d(-14, -14, Math.toRadians(-90)))
+                //go to the other side of the field
+                .lineToLinearHeading(new Pose2d(-14, 30, Math.toRadians(-90)))
+                .build();
+
+        if (position == BlueFilterFar.State.LEFT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardLeft);
+        } else if (position == BlueFilterFar.State.CENTER) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardCenter);
+        } else {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardRight);
+        }
+
+        TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
+                .build();
+        robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
+
+
+        robot.drive.moveBackwardsTouchSensor();
+
+        robot.timer.wait(500);
+
+        robot.lift.liftToPosition(-800);
+        while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
+            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
+            telemetry.update();
+        }
+        TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
+                .build();
+
+        TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-38, 49, Math.toRadians(-90)))
+                .build();
+
+        TrajectorySequence toBoard = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-22.4, 50.5, Math.toRadians(-90)))
+                .build();
+
+        if (position == BlueFilterFar.State.LEFT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
+        } else if (position == BlueFilterFar.State.CENTER) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
+        } else {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
+        }
+
+        //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
+
+
+        robot.timer.wait(200);
+
+        robot.lift.autoDeposit();
+        robot.timer.wait(1000);
+        robot.lift.autoClose();
+
+        robot.lift.liftToPosition(-100);
+        while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
+            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
+            telemetry.update();
+        }
+
+        TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .strafeLeft(24)
+                .build();
+        robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
+
     }
 
     @Override

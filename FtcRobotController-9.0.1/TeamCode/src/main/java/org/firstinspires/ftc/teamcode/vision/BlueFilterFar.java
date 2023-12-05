@@ -19,9 +19,9 @@ public class BlueFilterFar extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(265,276);
+    public Vector2d offset = new Vector2d(254,282);
     //right
-    public Vector2d offset1 = new Vector2d(590,278);
+    public Vector2d offset1 = new Vector2d(476,274);
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 
