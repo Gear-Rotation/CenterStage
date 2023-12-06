@@ -84,17 +84,24 @@ public class Blue2 extends AutoOpMode {
         robot.intake.depositPixel();
 
         TrajectorySequence toReachBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .strafeRight(12)
-                .forward(36)
-                .lineToLinearHeading(new Pose2d(-12, 0, Math.toRadians(-90)))
+                //strafe right to get away from pixel
+                .lineToLinearHeading(new Pose2d(-51, -36, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-51, -14, Math.toRadians(0)))
+                .lineToLinearHeading(new Pose2d(-12, -14, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-12, 30, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toReachBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .back(4)
-                .turn(Math.toRadians(50))
-                .strafeRight(4)
-                .forward(36)
-                .lineToLinearHeading(new Pose2d(-12, 0, Math.toRadians(-90)))
+                //back up 4 in away from pixel
+                .lineToLinearHeading(new Pose2d(-48, -30, Math.toRadians(0)))
+                //strafeleft to get away from pixel
+                .lineToLinearHeading(new Pose2d(-48, -34, Math.toRadians(0)))
+                //forward 30 before turning to lifting door
+                .lineToLinearHeading(new Pose2d(-14, -34, Math.toRadians(0)))
+                //reach center of the field(truss)
+                .lineToLinearHeading(new Pose2d(-14, -14, Math.toRadians(-90)))
+                //go to the other side of the field
+                .lineToLinearHeading(new Pose2d(-14, 30, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toReachBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
@@ -109,7 +116,7 @@ public class Blue2 extends AutoOpMode {
                 //go to the other side of the field
                 .lineToLinearHeading(new Pose2d(-14, 30, Math.toRadians(-90)))
                 .build();
-
+// Depending on the location of the team prop the robot will follow the corresponding path, which are stated above
         if (position == BlueFilterFar.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardLeft);
         } else if (position == BlueFilterFar.State.CENTER) {
@@ -117,59 +124,63 @@ public class Blue2 extends AutoOpMode {
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardRight);
         }
-
+//robot goes to the center of the board so that both touch sensors are pressed
         TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-37, 49, Math.toRadians(-90)))
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
 
-
+//make sure the robot is straight using touch sensors
         robot.drive.moveBackwardsTouchSensor();
 
         robot.timer.wait(500);
 
+//lift the slide to the correct position
         robot.lift.liftToPosition(-800);
         while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
         }
+        //coordinates to correct board positioning
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(-37, 50.5, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-38, 49, Math.toRadians(-90)))
+              //  .back(1)
+                .lineToLinearHeading(new Pose2d(-42, 49, Math.toRadians(-90)))
+               // .forward(2)
                 .build();
 
-        TrajectorySequence toBoard = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(-22.4, 50.5, Math.toRadians(-90)))
+        TrajectorySequence toBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-35, 52, Math.toRadians(-90)))
                 .build();
-
+//executes the commands from above
         if (position == BlueFilterFar.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
         } else if (position == BlueFilterFar.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
         } else {
-            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardRight);
         }
 
         //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
 
 
         robot.timer.wait(200);
-
+//opens block servo to drop pixel and closes it back up when finished
         robot.lift.autoDeposit();
         robot.timer.wait(1000);
         robot.lift.autoClose();
-
+//brings slide down
         robot.lift.liftToPosition(-100);
         while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
         }
-
+//strafes right to be in the parking zone
         TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .strafeLeft(24)
+                .strafeLeft(20)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
 
