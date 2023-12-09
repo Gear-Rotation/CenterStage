@@ -151,7 +151,7 @@ public class Drivetrain extends Subsystem {
         double frPower = 0;
         double blPower = 0;
         double brPower = 0;
-        while ((!backLeftTouch.getState() || !backRightTouch.getState()) && opMode.opModeIsActive()) {
+        while ((!backLeftTouch.getState() && !backRightTouch.getState()) && opMode.opModeIsActive()) {
             if(!backLeftTouch.getState()) {
                 flPower = -0.2;
                 blPower = -0.2;
@@ -173,7 +173,7 @@ public class Drivetrain extends Subsystem {
             if (gamepad1.left_bumper) {
                 drivePower = 0.25;
             } else {
-                drivePower = 0.70;
+                drivePower = 0.9;
             }
         }
 //
