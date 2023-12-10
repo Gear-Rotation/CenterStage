@@ -5,33 +5,33 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue2;
+import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed;
 
 @Autonomous(name = "Vision Test")
 public class VisionTest extends AutoOpMode {
     @Override
     public void setup() {
-        FrameGrabberBlue2 fg = new FrameGrabberBlue2(this, this.robot);
+        FrameGrabberRed fg = new FrameGrabberRed(this, this.robot);
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(),fg.blueFilterFar.offset1.getY() + 0.001);
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX(),fg.redFilter.offset.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(),fg.blueFilterFar.offset1.getY() - 0.001);
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX(),fg.redFilter.offset.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() - 0.001,fg.blueFilterFar.offset1.getY());
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX() - 0.001,fg.redFilter.offset.getY());
             }
 
             if (gamepad1.dpad_right) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() + 0.001,fg.blueFilterFar.offset1.getY());
+                fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX() + 0.001,fg.redFilter.offset.getY());
             }
 
-            telemetry.addData("position", fg.blueFilterFar.position);
+            telemetry.addData("position", fg.redFilter.position);
             telemetry.addData("running", "test");
-            telemetry.addData("test", fg.blueFilterFar.offset1);
+            telemetry.addData("test", fg.redFilter.offset);
             telemetry.update();
         }
     }

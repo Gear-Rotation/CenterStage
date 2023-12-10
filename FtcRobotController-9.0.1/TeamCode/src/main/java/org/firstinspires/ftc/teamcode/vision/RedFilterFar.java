@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BlueFilterFar extends OpenCvPipeline {
+public class RedFilterFar extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
@@ -55,7 +55,7 @@ public class BlueFilterFar extends OpenCvPipeline {
         Core.split(workingMat, channels);
 
         if(channels.size() > 0) {
-            Imgproc.threshold(channels.get(2), workingMat, 134, 255, Imgproc.THRESH_BINARY);
+            Imgproc.threshold(channels.get(2), workingMat, 153, 255, Imgproc.THRESH_BINARY);
         }
 
         channels.get(0).release();

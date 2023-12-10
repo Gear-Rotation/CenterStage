@@ -60,6 +60,9 @@ public class Intake extends Subsystem {
             intake.setPower(-0.4);
         }
         intake.setPower(0);
+    }
+
+    public void raiseIntake() {
         disarmIntake();
         timer.wait(500);
     }

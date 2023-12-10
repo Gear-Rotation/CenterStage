@@ -4,20 +4,19 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.vision.BlueFilter;
-import org.firstinspires.ftc.teamcode.vision.BlueFilterFar;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue2;
+import org.firstinspires.ftc.teamcode.vision.RedFilterFar;
+import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed2;
 
 
-@Autonomous(name = "Blue Far")
-public class Blue2 extends AutoOpMode {
+@Autonomous(name = "Red Far")
+public class Red2 extends AutoOpMode {
     Vector2d zoneRight = new Vector2d(-40, -45.5);
     Vector2d zoneMiddle = new Vector2d(-39, -36);
     Vector2d zoneLeft = new Vector2d(-43, -30);
-    BlueFilterFar.State position = BlueFilterFar.State.NOT_FOUND;
+    RedFilterFar.State position = RedFilterFar.State.NOT_FOUND;
 
 
     public Pose2d getInitialPose() {
@@ -26,25 +25,25 @@ public class Blue2 extends AutoOpMode {
 
     @Override
     public void setup() {
-        FrameGrabberBlue2 fg = new FrameGrabberBlue2(this, this.robot);
+        FrameGrabberRed2 fg = new FrameGrabberRed2(this, this.robot);
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(), fg.blueFilterFar.offset1.getY() + 0.001);
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX(), fg.redFilterFar.offset1.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(), fg.blueFilterFar.offset1.getY() - 0.001);
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX(), fg.redFilterFar.offset1.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() - 0.001, fg.blueFilterFar.offset1.getY());
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX() - 0.001, fg.redFilterFar.offset1.getY());
             }
 
             if (gamepad1.dpad_right) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() + 0.001, fg.blueFilterFar.offset1.getY());
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX() + 0.001, fg.redFilterFar.offset1.getY());
             }
 
-            position = fg.blueFilterFar.position;
+            position = fg.redFilterFar.position;
 
             telemetry.addData("position", position);
             telemetry.update();
@@ -73,9 +72,9 @@ public class Blue2 extends AutoOpMode {
                 .forward(2.2)
                 .build();
 
-        if (position == BlueFilterFar.State.RIGHT) {
+        if (position == RedFilterFar.State.RIGHT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(right);
-        } else if (position == BlueFilterFar.State.CENTER) {
+        } else if (position == RedFilterFar.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(middle);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(left);
@@ -113,9 +112,9 @@ public class Blue2 extends AutoOpMode {
                 .forward(30)
                 .build();
         // Depending on the location of the team prop the robot will follow the corresponding path, which are stated above
-        if (position == BlueFilterFar.State.LEFT) {
+        if (position == RedFilterFar.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardLeft);
-        } else if (position == BlueFilterFar.State.CENTER) {
+        } else if (position == RedFilterFar.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardCenter);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardRight);
@@ -151,9 +150,9 @@ public class Blue2 extends AutoOpMode {
                 .build();
 
         //executes the commands from above
-        if (position == BlueFilterFar.State.LEFT) {
+        if (position == RedFilterFar.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
-        } else if (position == BlueFilterFar.State.CENTER) {
+        } else if (position == RedFilterFar.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardRight);

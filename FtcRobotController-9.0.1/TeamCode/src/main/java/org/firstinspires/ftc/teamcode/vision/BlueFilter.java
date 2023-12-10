@@ -107,6 +107,8 @@ public class BlueFilter extends OpenCvPipeline {
 
         }
 
+        workingMat.release();
+
         return input;
     }
 }

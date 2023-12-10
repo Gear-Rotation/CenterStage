@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.GearRotationMecanumDrive;
@@ -24,6 +25,7 @@ public class Drivetrain extends Subsystem {
     private DcMotor backRight;
     private DigitalChannel backLeftTouch;
     private DigitalChannel backRightTouch;
+    private Servo airPlane;
 
     private double drivePower = 0.7;
     private Timer timer;
@@ -45,6 +47,7 @@ public class Drivetrain extends Subsystem {
         frontRight = map.get(DcMotorEx.class, "BL");
         backLeftTouch = map.get(DigitalChannel.class, "BLT");
         backRightTouch = map.get(DigitalChannel.class, "BRT");
+        airPlane = map.get(Servo.class, "Plane");
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -53,6 +56,8 @@ public class Drivetrain extends Subsystem {
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+     //   airPlane.setPosition(0);
 
         roadRunnerDrive = new GearRotationMecanumDrive(map);
         roadRunnerDrive.setPoseEstimate(initialPose);
@@ -176,8 +181,14 @@ public class Drivetrain extends Subsystem {
                 drivePower = 0.9;
             }
         }
-//
-//
+
+        if(gamepad2.x){
+            airPlane.setPosition(-1);
+        } else {
+            airPlane.setPosition(1);
+        }
+
+
         mecanumDrive(drivePower);
         }
     }

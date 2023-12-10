@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class BlueFilterFar extends OpenCvPipeline {
+public class RedFilter extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(254,282);
+    public Vector2d offset = new Vector2d(265,276);
     //right
-    public Vector2d offset1 = new Vector2d(574,274);
+    public Vector2d offset1 = new Vector2d(571,267);
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 
@@ -55,7 +55,7 @@ public class BlueFilterFar extends OpenCvPipeline {
         Core.split(workingMat, channels);
 
         if(channels.size() > 0) {
-            Imgproc.threshold(channels.get(2), workingMat, 134, 255, Imgproc.THRESH_BINARY);
+            Imgproc.threshold(channels.get(1), workingMat, 153, 255, Imgproc.THRESH_BINARY);
         }
 
         channels.get(0).release();
@@ -107,9 +107,8 @@ public class BlueFilterFar extends OpenCvPipeline {
 
         }
 
+        workingMat.release();
+
         return input;
     }
 }
-
-
-

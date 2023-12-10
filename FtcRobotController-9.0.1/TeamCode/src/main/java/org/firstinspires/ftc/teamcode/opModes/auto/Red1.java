@@ -7,43 +7,42 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
-import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue;
-import org.firstinspires.ftc.teamcode.vision.BlueFilter;
+import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed;
+import org.firstinspires.ftc.teamcode.vision.RedFilter;
 
 @Autonomous(name = "Red Close")
 public class Red1 extends AutoOpMode {
-    Vector2d zoneLeft = new Vector2d(45, 19);
-    Vector2d zoneMiddle = new Vector2d(40, 12);
-    Vector2d zoneRight = new Vector2d(45, 6);
-    BlueFilter.State position = BlueFilter.State.NOT_FOUND;
+    Vector2d zoneRight = new Vector2d(45, 24);
+    Vector2d zoneMiddle = new Vector2d(38, 14);
+    Vector2d zoneLeft = new Vector2d(45, 12);
+    RedFilter.State position = RedFilter.State.NOT_FOUND;
 
 
     public Pose2d getInitialPose() {
-        //change
-        return new Pose2d(64, 3, Math.toRadians(0));
+        return new Pose2d(64, 10.25, Math.toRadians(180));
     }
 
     @Override
     public void setup() {
-        FrameGrabberBlue fg = new FrameGrabberBlue(this, this.robot);
+        FrameGrabberRed fg = new FrameGrabberRed(this, this.robot);
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() - 0.001,fg.redFilter.offset1.getY());
             }
 
             if (gamepad1.dpad_right) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() + 0.001,fg.redFilter.offset1.getY());
             }
 
-            position = fg.blueFilter.position;
+            position = fg.redFilter.position;
 
             telemetry.addData("position", position);
             telemetry.update();
@@ -56,21 +55,26 @@ public class Red1 extends AutoOpMode {
     @Override
     public void run() {
         int zone = 0;
+        TrajectorySequence toMove = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .strafeRight(4)
+                .build();
+        robot.drive.roadRunnerDrive.followTrajectorySequence(toMove);
+
         TrajectorySequence left = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneLeft)
+                .turn(Math.toRadians(50))
+                .forward(4.5)
                 .build();
         TrajectorySequence middle = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneMiddle)
                 .build();
         TrajectorySequence right = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneRight)
-                .turn(Math.toRadians(50))
-                .forward(4)
                 .build();
 
-        if (position == BlueFilter.State.LEFT) {
+        if (position == RedFilter.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(left);
-        } else if (position == BlueFilter.State.CENTER) {
+        } else if (position == RedFilter.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(middle);
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(right);
@@ -82,20 +86,20 @@ public class Red1 extends AutoOpMode {
                 .lineToLinearHeading(new Pose2d(36, 49, Math.toRadians(-90)))
                 .build();
 
+        TrajectorySequence toBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d( 43, 49, Math.toRadians(-90)))
+                .build();
+
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(38, 49, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(25, 50.5, Math.toRadians(-90)))
                 .build();
 
-        TrajectorySequence toBoard = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(22.4, 50.5, Math.toRadians(-90)))
-                .build();
-
-        if (position == BlueFilter.State.LEFT) {
-            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
-        } else if (position == BlueFilter.State.CENTER) {
+        if (position == RedFilter.State.RIGHT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardRight);
+        } else if (position == RedFilter.State.CENTER) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardCenter);
         } else {
-            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
+            robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
         }
 
         //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
@@ -124,7 +128,9 @@ public class Red1 extends AutoOpMode {
         }
 
         TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .strafeLeft(24)
+                .forward(2)
+                .lineToLinearHeading(new Pose2d(10, 49, Math.toRadians(-90)))
+                .back(7)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
 
@@ -138,5 +144,3 @@ public class Red1 extends AutoOpMode {
         run();
     }
 }
-
-
