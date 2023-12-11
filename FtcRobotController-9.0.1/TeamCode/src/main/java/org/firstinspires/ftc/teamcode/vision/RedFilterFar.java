@@ -55,7 +55,7 @@ public class RedFilterFar extends OpenCvPipeline {
         Core.split(workingMat, channels);
 
         if(channels.size() > 0) {
-            Imgproc.threshold(channels.get(2), workingMat, 153, 255, Imgproc.THRESH_BINARY);
+            Imgproc.threshold(channels.get(1), workingMat, 153, 255, Imgproc.THRESH_BINARY);
         }
 
         channels.get(0).release();

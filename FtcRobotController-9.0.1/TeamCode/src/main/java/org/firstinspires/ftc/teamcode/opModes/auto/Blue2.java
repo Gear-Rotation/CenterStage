@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue2;
 public class Blue2 extends AutoOpMode {
     Vector2d zoneRight = new Vector2d(-40, -45.5);
     Vector2d zoneMiddle = new Vector2d(-39, -36);
-    Vector2d zoneLeft = new Vector2d(-43, -30);
+    Vector2d zoneLeft = new Vector2d(-43, -36);
     BlueFilterFar.State position = BlueFilterFar.State.NOT_FOUND;
 
 

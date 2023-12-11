@@ -156,7 +156,13 @@ public class Drivetrain extends Subsystem {
         double frPower = 0;
         double blPower = 0;
         double brPower = 0;
+        timer.resetTimer();
+
         while ((!backLeftTouch.getState() && !backRightTouch.getState()) && opMode.opModeIsActive()) {
+            if (timer.getTime() > 2500) {
+                break;
+            }
+
             if(!backLeftTouch.getState()) {
                 flPower = -0.2;
                 blPower = -0.2;
