@@ -19,9 +19,9 @@ public class RedFilterFar extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(254,282);
+    public Vector2d offset = new Vector2d(238,302);
     //right
-    public Vector2d offset1 = new Vector2d(574,274);
+    public Vector2d offset1 = new Vector2d(559,303);
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 
@@ -50,10 +50,12 @@ public class RedFilterFar extends OpenCvPipeline {
         channels = new ArrayList<>();
         input.copyTo(workingMat);
 
+        // coverts the RGB color space to CrCb
         Imgproc.cvtColor(workingMat, workingMat, Imgproc.COLOR_RGB2YCrCb);
+        //blurs the image to remove small imperfections
         Imgproc.GaussianBlur(workingMat, workingMat, new Size(5,5), 0);
         Core.split(workingMat, channels);
-
+//extracts the channels
         if(channels.size() > 0) {
             Imgproc.threshold(channels.get(1), workingMat, 153, 255, Imgproc.THRESH_BINARY);
         }

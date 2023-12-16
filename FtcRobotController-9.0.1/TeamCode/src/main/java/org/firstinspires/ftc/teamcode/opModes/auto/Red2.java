@@ -30,23 +30,41 @@ public class Red2 extends AutoOpMode {
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX(), fg.redFilterFar.offset1.getY() + 0.001);
+                fg.redFilterFar.offset = new Vector2d(fg.redFilterFar.offset.getX(), fg.redFilterFar.offset.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX(), fg.redFilterFar.offset1.getY() - 0.001);
+                fg.redFilterFar.offset = new Vector2d(fg.redFilterFar.offset.getX(), fg.redFilterFar.offset.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX() - 0.001, fg.redFilterFar.offset1.getY());
+                fg.redFilterFar.offset = new Vector2d(fg.redFilterFar.offset.getX() - 0.001, fg.redFilterFar.offset.getY());
             }
 
             if (gamepad1.dpad_right) {
+                fg.redFilterFar.offset = new Vector2d(fg.redFilterFar.offset.getX() + 0.001, fg.redFilterFar.offset.getY());
+            }
+
+            if (gamepad2.dpad_up) {
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX(), fg.redFilterFar.offset1.getY() + 0.001);
+            }
+            if (gamepad2.dpad_down) {
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX(), fg.redFilterFar.offset1.getY() - 0.001);
+            }
+
+            if (gamepad2.dpad_left) {
+                fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX() - 0.001, fg.redFilterFar.offset1.getY());
+            }
+
+            if (gamepad2.dpad_right) {
                 fg.redFilterFar.offset1 = new Vector2d(fg.redFilterFar.offset1.getX() + 0.001, fg.redFilterFar.offset1.getY());
             }
 
             position = fg.redFilterFar.position;
 
             telemetry.addData("position", position);
+
+            telemetry.addData("offset", fg.redFilterFar.offset);
+            telemetry.addData("offset1", fg.redFilterFar.offset1);
             telemetry.update();
         }
 
@@ -110,7 +128,7 @@ public class Red2 extends AutoOpMode {
                 .build();
 
 //
-                // Depending on the location of the team prop the robot will follow the corresponding path, which are stated above
+        // Depending on the location of the team prop the robot will follow the corresponding path, which are stated above
         if (position == RedFilterFar.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardLeft);
         } else if (position == RedFilterFar.State.CENTER) {
@@ -125,7 +143,7 @@ public class Red2 extends AutoOpMode {
 //                .back(20)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
-                //coordinates to correct board positioning
+        //coordinates to correct board positioning
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(41, 50.5, Math.toRadians(-90)))
                 .build();
@@ -140,8 +158,8 @@ public class Red2 extends AutoOpMode {
 //                .forward(2)0
 //                .strafeLeft(3)
 //                .back(2)
-                .lineToLinearHeading(new Pose2d(42.5, 49,Math.toRadians(-90)))
-             //   .back(6)
+                .lineToLinearHeading(new Pose2d(42.5, 49, Math.toRadians(-90)))
+                //   .back(6)
                 .build();
 
         //executes the commands from above
@@ -159,7 +177,7 @@ public class Red2 extends AutoOpMode {
 //
         robot.timer.wait(500);
 
-       // lift the slide to the correct position
+        // lift the slide to the correct position
         robot.lift.liftToPosition(-800);
         while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
@@ -190,7 +208,6 @@ public class Red2 extends AutoOpMode {
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
     }
-
 
 
     @Override

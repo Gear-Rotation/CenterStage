@@ -34,6 +34,27 @@ public class VisionTest extends AutoOpMode {
             telemetry.addData("test", fg.redFilter.offset);
             telemetry.update();
         }
+        while (!isStarted()) {
+            if (gamepad2.dpad_up) {
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() + 0.001);
+            }
+            if (gamepad2.dpad_down) {
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX(),fg.redFilter.offset1.getY() - 0.001);
+            }
+
+            if (gamepad2.dpad_left) {
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() - 0.001,fg.redFilter.offset1.getY());
+            }
+
+            if (gamepad2.dpad_right) {
+                fg.redFilter.offset1 = new Vector2d(fg.redFilter.offset1.getX() + 0.001,fg.redFilter.offset1.getY());
+            }
+
+            telemetry.addData("position", fg.redFilter.position);
+            telemetry.addData("running", "test");
+            telemetry.addData("test", fg.redFilter.offset1);
+            telemetry.update();
+        }
     }
 
     @Override

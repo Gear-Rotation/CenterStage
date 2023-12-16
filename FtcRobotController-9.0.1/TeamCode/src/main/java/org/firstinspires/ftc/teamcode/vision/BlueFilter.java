@@ -19,7 +19,7 @@ public class BlueFilter extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(290,276);
+    public Vector2d offset = new Vector2d(238,302);
     //right
     public Vector2d offset1 = new Vector2d(580,278);
     private Mat workingMat = new Mat();

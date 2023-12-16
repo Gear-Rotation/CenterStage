@@ -30,23 +30,41 @@ public class Blue2 extends AutoOpMode {
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(), fg.blueFilterFar.offset1.getY() + 0.001);
+                fg.blueFilterFar.offset = new Vector2d(fg.blueFilterFar.offset.getX(), fg.blueFilterFar.offset.getY() + 0.001);
             }
             if (gamepad1.dpad_down) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(), fg.blueFilterFar.offset1.getY() - 0.001);
+                fg.blueFilterFar.offset = new Vector2d(fg.blueFilterFar.offset.getX(), fg.blueFilterFar.offset.getY() - 0.001);
             }
 
             if (gamepad1.dpad_left) {
-                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() - 0.001, fg.blueFilterFar.offset1.getY());
+                fg.blueFilterFar.offset = new Vector2d(fg.blueFilterFar.offset.getX() - 0.001, fg.blueFilterFar.offset.getY());
             }
 
             if (gamepad1.dpad_right) {
+                fg.blueFilterFar.offset = new Vector2d(fg.blueFilterFar.offset.getX() + 0.001, fg.blueFilterFar.offset.getY());
+            }
+
+            if (gamepad2.dpad_up) {
+                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(), fg.blueFilterFar.offset1.getY() + 0.001);
+            }
+            if (gamepad2.dpad_down) {
+                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX(), fg.blueFilterFar.offset1.getY() - 0.001);
+            }
+
+            if (gamepad2.dpad_left) {
+                fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() - 0.001, fg.blueFilterFar.offset1.getY());
+            }
+
+            if (gamepad2.dpad_right) {
                 fg.blueFilterFar.offset1 = new Vector2d(fg.blueFilterFar.offset1.getX() + 0.001, fg.blueFilterFar.offset1.getY());
             }
 
             position = fg.blueFilterFar.position;
 
             telemetry.addData("position", position);
+
+            telemetry.addData("offset", fg.blueFilterFar.offset);
+            telemetry.addData("offset1", fg.blueFilterFar.offset1);
             telemetry.update();
         }
 

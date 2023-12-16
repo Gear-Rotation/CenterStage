@@ -19,9 +19,9 @@ public class RedFilter extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(265,276);
+    public Vector2d offset = new Vector2d(214,299);
     //right
-    public Vector2d offset1 = new Vector2d(571,267);
+    public Vector2d offset1 = new Vector2d(517,301);
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 

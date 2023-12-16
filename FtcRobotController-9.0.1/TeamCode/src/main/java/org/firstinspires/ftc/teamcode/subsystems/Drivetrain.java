@@ -184,7 +184,7 @@ public class Drivetrain extends Subsystem {
             if (gamepad1.left_bumper) {
                 drivePower = 0.25;
             } else {
-                drivePower = 0.9;
+                drivePower = 0.8;
             }
         }
 

@@ -26,7 +26,6 @@ public class FrameGrabberRed2 {
         int cameraMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
 
-
         redFilterFar = new RedFilterFar();
         camera.setPipeline(redFilterFar);
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
