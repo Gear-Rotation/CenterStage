@@ -78,6 +78,7 @@ public class Red2 extends AutoOpMode {
 //                .strafeLeft(5)
 //                .build();
 //        robot.drive.roadRunnerDrive.followTrajectorySequence(toAlign);
+        //        robot.timer.wait(5000);
         int zone = 0;
         TrajectorySequence right = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneRight)
@@ -112,6 +113,7 @@ public class Red2 extends AutoOpMode {
 
         TrajectorySequence toReachBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .back(3)
+                //as moving away we disarm the intake
                 .addDisplacementMarker(() -> {
                     robot.intake.raiseIntake();
                 })

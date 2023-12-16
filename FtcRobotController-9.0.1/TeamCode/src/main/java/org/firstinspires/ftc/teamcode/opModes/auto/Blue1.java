@@ -180,6 +180,7 @@ import org.firstinspires.ftc.teamcode.vision.BlueFilter;
 
 @Autonomous(name = "Blue Close")
 public class Blue1 extends AutoOpMode {
+    //positions of spike marks
     Vector2d zoneLeft = new Vector2d(-45, 22);
     Vector2d zoneMiddle = new Vector2d(-40, 12);
     Vector2d zoneRight = new Vector2d(-45, 6);
@@ -187,12 +188,14 @@ public class Blue1 extends AutoOpMode {
 
 
     public Pose2d getInitialPose() {
+        //starting position
         return new Pose2d(-64, 10.25, Math.toRadians(0));
     }
 
     @Override
     public void setup() {
         FrameGrabberBlue fg = new FrameGrabberBlue(this, this.robot);
+        //way to adjust camera during init before running, last minute
 
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
@@ -241,7 +244,7 @@ public class Blue1 extends AutoOpMode {
     @Override
     public void run() {
 
-        robot.timer.wait(5);
+//        robot.timer.wait(5000);
         int zone = 0;
         TrajectorySequence left = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneLeft)

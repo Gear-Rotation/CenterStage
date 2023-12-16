@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.vision.RedFilter;
 
 @Autonomous(name = "Red Close")
 public class Red1 extends AutoOpMode {
+    //spike mrk positions
     Vector2d zoneRight = new Vector2d(45, 24);
     Vector2d zoneMiddle = new Vector2d(38, 14);
     Vector2d zoneLeft = new Vector2d(45, 12);
@@ -19,13 +20,14 @@ public class Red1 extends AutoOpMode {
 
 
     public Pose2d getInitialPose() {
+        //robot starting position
         return new Pose2d(64, 10.25, Math.toRadians(180));
     }
 
     @Override
     public void setup() {
         FrameGrabberRed fg = new FrameGrabberRed(this, this.robot);
-
+//way to adjust camera before match
         while (!isStarted()) {
             if (gamepad1.dpad_up) {
                 fg.redFilter.offset = new Vector2d(fg.redFilter.offset.getX(), fg.redFilter.offset.getY() + 0.001);
@@ -72,11 +74,14 @@ public class Red1 extends AutoOpMode {
 
     @Override
     public void run() {
+        //        robot.timer.wait(5000);
         int zone = 0;
+        //move to the middle of the tile
         TrajectorySequence toMove = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .strafeRight(4)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toMove);
+        //goign to different positions based off of the webcam
 
         TrajectorySequence left = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneLeft)
@@ -89,7 +94,7 @@ public class Red1 extends AutoOpMode {
         TrajectorySequence right = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneRight)
                 .build();
-
+//executes the precious code
         if (position == RedFilter.State.LEFT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(left);
         } else if (position == RedFilter.State.CENTER) {
@@ -97,9 +102,10 @@ public class Red1 extends AutoOpMode {
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(right);
         }
-
+//deposits pixel
         robot.intake.depositPixel();
 
+        //board positions to drop pixel
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(36, 49, Math.toRadians(-90)))
                 .build();
@@ -112,6 +118,8 @@ public class Red1 extends AutoOpMode {
                 .lineToLinearHeading(new Pose2d(25, 50.5, Math.toRadians(-90)))
                 .build();
 
+        //executes the previous block
+
         if (position == RedFilter.State.RIGHT) {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardRight);
         } else if (position == RedFilter.State.CENTER) {
@@ -122,11 +130,13 @@ public class Red1 extends AutoOpMode {
 
         //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
 
-
+//aligns to the backdrop
         robot.drive.moveBackwardsTouchSensor();
 
+        //wait
         robot.timer.wait(500);
 
+        //lifts slide
         robot.lift.liftToPosition(-800);
         while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
@@ -135,16 +145,20 @@ public class Red1 extends AutoOpMode {
 
         robot.timer.wait(200);
 
+        //opens block servo to drop and closes t again after dropped
         robot.lift.autoDeposit();
         robot.timer.wait(1000);
         robot.lift.autoClose();
 
+//lowers slide
         robot.lift.liftToPosition(-100);
+        //lowers until it is within 10 encoder ticks of position
         while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
         }
 
+        //parks the robot
         TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .forward(2)
                 .lineToLinearHeading(new Pose2d(10, 49, Math.toRadians(-90)))
@@ -154,6 +168,7 @@ public class Red1 extends AutoOpMode {
 
     }
 
+    //plays the code
     @Override
     public void runOpMode() throws InterruptedException {
         robot = new Robot(this, this.telemetry, getInitialPose());

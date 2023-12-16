@@ -74,6 +74,7 @@ public class Blue2 extends AutoOpMode {
 
     @Override
     public void run() {
+        //        robot.timer.wait(5000);
         TrajectorySequence toAlign = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .strafeRight(5)
                 .build();
