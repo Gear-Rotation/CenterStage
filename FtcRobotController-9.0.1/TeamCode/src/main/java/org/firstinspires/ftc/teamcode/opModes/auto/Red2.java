@@ -78,7 +78,7 @@ public class Red2 extends AutoOpMode {
 //                .strafeLeft(5)
 //                .build();
 //        robot.drive.roadRunnerDrive.followTrajectorySequence(toAlign);
-        //        robot.timer.wait(5000);
+              robot.timer.wait(2000);
         int zone = 0;
         TrajectorySequence right = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneRight)
@@ -138,6 +138,8 @@ public class Red2 extends AutoOpMode {
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardRight);
         }
+
+        robot.intake.disarmIntake();
 //
         //robot aligns to go under stage door
         TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
@@ -180,7 +182,7 @@ public class Red2 extends AutoOpMode {
         robot.timer.wait(500);
 
         // lift the slide to the correct position
-        robot.lift.liftToPosition(-800);
+        robot.lift.liftToPosition(-1200);
         while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();

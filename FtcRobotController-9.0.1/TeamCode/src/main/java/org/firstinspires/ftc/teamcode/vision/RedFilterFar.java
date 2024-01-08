@@ -109,6 +109,7 @@ public class RedFilterFar extends OpenCvPipeline {
 
         }
 
+        workingMat.release();
         return input;
     }
 }

@@ -25,6 +25,7 @@ public class BlueFilter extends OpenCvPipeline {
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 
+public double threshold = 134;
     public double offsetAverage = 0;
     public double offset1Average = 0;
 
@@ -55,7 +56,7 @@ public class BlueFilter extends OpenCvPipeline {
         Core.split(workingMat, channels);
 
         if(channels.size() > 0) {
-            Imgproc.threshold(channels.get(2), workingMat, 134, 255, Imgproc.THRESH_BINARY);
+            Imgproc.threshold(channels.get(2), workingMat, threshold, 255, Imgproc.THRESH_BINARY);
         }
 
         channels.get(0).release();
@@ -107,8 +108,8 @@ public class BlueFilter extends OpenCvPipeline {
 
         }
 
-        workingMat.release();
+//        workingMat.release();
 
-        return input;
+        return workingMat;
     }
 }

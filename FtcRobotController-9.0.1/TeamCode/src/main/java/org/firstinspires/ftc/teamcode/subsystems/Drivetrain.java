@@ -67,9 +67,9 @@ public class Drivetrain extends Subsystem {
     }
 
     public void mecanumDrive(double power) {
-        double y = -gamepad1.left_stick_y;
-        double x = gamepad1.left_stick_x;
-        double rx = gamepad1.right_stick_x;
+        double y = Math.signum(-gamepad1.left_stick_y) * Math.pow(-gamepad1.left_stick_y, 2);
+        double x = Math.signum(gamepad1.left_stick_x) * Math.pow(gamepad1.left_stick_x, 2);
+        double rx = Math.signum(gamepad1.right_stick_x) * Math.pow(gamepad1.right_stick_x, 2);
 
         if (gamepad1.dpad_up) {
             y = 0.3;

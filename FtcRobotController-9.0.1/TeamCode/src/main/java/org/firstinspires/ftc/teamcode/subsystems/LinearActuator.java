@@ -50,7 +50,7 @@ public class LinearActuator extends Subsystem{
 
         if(gamepad2.left_stick_y > 0.5) {
             linearActuator.setPower(-1);
-        } else if(gamepad2.left_stick_y < -0.5) {
+        } else if(gamepad2.left_stick_y < -0.5 && gamepad2.y) {
             linearActuator.setPower(1);
         } else {
             linearActuator.setPower(0);

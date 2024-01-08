@@ -124,7 +124,7 @@ public class Blue2 extends AutoOpMode {
 
         TrajectorySequence toReachBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 //back up 5 in away from pixel
-                .back(3)
+                .back(5)
                 .addDisplacementMarker(() -> {
                     robot.intake.raiseIntake();
                 })
@@ -139,6 +139,8 @@ public class Blue2 extends AutoOpMode {
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toReachBoardRight);
         }
+
+        robot.intake.disarmIntake();
          //
 
         //robot aligns to go under stage door
@@ -185,7 +187,7 @@ public class Blue2 extends AutoOpMode {
         robot.timer.wait(500);
 
        // lift the slide to the correct position
-        robot.lift.liftToPosition(-800);
+        robot.lift.liftToPosition(-1200);
         while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();

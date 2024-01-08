@@ -128,6 +128,8 @@ public class Red1 extends AutoOpMode {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoardLeft);
         }
 
+        robot.intake.disarmIntake();
+
         //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
 
 //aligns to the backdrop

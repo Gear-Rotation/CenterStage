@@ -70,7 +70,7 @@ public class Intake extends Subsystem {
     @Override
     public void update() {
         if (gamepad1.right_trigger > 0.25 || gamepad2.right_trigger > 0.25) {
-            intake.setPower(0.5);
+            intake.setPower(0.7);
         } else if (gamepad1.left_trigger > 0.25) {
             intake.setPower(gamepad1.left_trigger * -0.5);
         } else {

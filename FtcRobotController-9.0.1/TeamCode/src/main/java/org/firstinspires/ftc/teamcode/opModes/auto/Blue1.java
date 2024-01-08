@@ -198,6 +198,15 @@ public class Blue1 extends AutoOpMode {
         //way to adjust camera during init before running, last minute
 
         while (!isStarted()) {
+
+            if (gamepad1.a) {
+                fg.blueFilter.threshold += 0.001;
+            }
+            if (gamepad1.b) {
+                fg.blueFilter.threshold -= 0.001;
+            }
+
+
             if (gamepad1.dpad_up) {
                 fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() + 0.001);
             }
@@ -234,6 +243,7 @@ public class Blue1 extends AutoOpMode {
 
             telemetry.addData("offset", fg.blueFilter.offset);
             telemetry.addData("offset1", fg.blueFilter.offset1);
+            telemetry.addData("threshold", fg.blueFilter.threshold);
             telemetry.update();
         }
 
@@ -268,7 +278,6 @@ public class Blue1 extends AutoOpMode {
 
         robot.intake.depositPixel();
 
-        robot.intake.disarmIntake();
 
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(-36, 49, Math.toRadians(-90)))
@@ -289,6 +298,8 @@ public class Blue1 extends AutoOpMode {
         } else {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
         }
+
+        robot.intake.disarmIntake();
 
         //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
 
