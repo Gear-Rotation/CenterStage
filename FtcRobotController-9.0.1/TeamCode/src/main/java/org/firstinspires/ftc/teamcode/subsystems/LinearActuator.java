@@ -18,6 +18,7 @@ public class LinearActuator extends Subsystem{
     private Gamepad gamepad2;
     private LinearOpMode opMode;
     private Timer timer;
+    private final int UPPER_BOUND = 5000;
 
 
     public LinearActuator(OpMode opMode, Telemetry telemetry) {
@@ -44,17 +45,35 @@ public class LinearActuator extends Subsystem{
 
     @Override
     public void update() {
-//        if(gamepad2.dpad_up){
-//            linearActuator.setPower(0.6);
+        if(gamepad2.dpad_up){
+            linearActuator.setPower(0.6);
+        }
+
+//        if(gamepad2.left_stick_y > 0.5) {
+//            linearActuator.setPower(-1);
+//        } else if(gamepad2.left_stick_y < -0.5 && gamepad2.y) {
+//            if(linearActuator.getCurrentPosition() >= UPPER_BOUND && gamepad2.right_stick_y < 0) {
+//                linearActuator.setPower(0);
+//            } else {
+//                linearActuator.setPower(1);
+//            }
+//        } else {
+//            linearActuator.setPower(0);
 //        }
 
-        if(gamepad2.left_stick_y > 0.5) {
-            linearActuator.setPower(-1);
-        } else if(gamepad2.left_stick_y < -0.5 && gamepad2.y) {
-            linearActuator.setPower(1);
-        } else {
+        if(gamepad2.left_stick_y < -0.5 && gamepad2.y) {
+            if (linearActuator.getCurrentPosition() >= UPPER_BOUND && gamepad2.left_stick_y < 0) {
+                linearActuator.setPower(0);
+            } else {
+                linearActuator.setPower(1);
+            }
+        } else if(gamepad2.left_stick_y > 0.5){
+                linearActuator.setPower(-1);
+            } else{
             linearActuator.setPower(0);
         }
+
+
 
        telemetry.addData("lam position", linearActuator.getCurrentPosition());
         telemetry.addData("lam joystick", gamepad2.left_stick_y);

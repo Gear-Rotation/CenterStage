@@ -71,8 +71,8 @@ public class Intake extends Subsystem {
     public void update() {
         if (gamepad1.right_trigger > 0.25 || gamepad2.right_trigger > 0.25) {
             intake.setPower(0.7);
-        } else if (gamepad1.left_trigger > 0.25) {
-            intake.setPower(gamepad1.left_trigger * -0.5);
+        } else if (gamepad1.left_trigger > 0.25 || gamepad2.left_bumper) {
+            intake.setPower(-0.5);
         } else {
             intake.setPower(0);
         }
@@ -88,6 +88,11 @@ public class Intake extends Subsystem {
         } else {
             folder.setPosition(0.58);
         }
+//        if(gamepad2.left_bumper) {
+//            folder.setPosition(0);
+//        } else {
+//            folder.setPosition(0.58);
+//        }
 
 //        if (folderToggle.status(gamepad1.right_bumper) == UTILToggle.Status.COMPLETE) {
 //            if (isFolderOpen) {
