@@ -4,19 +4,18 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.teamcode.vision.BlueFilter;
-import org.firstinspires.ftc.teamcode.vision.BlueFilterFar;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
+import org.firstinspires.ftc.teamcode.vision.BlueFilterFar;
 import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue2;
 
 
-@Autonomous(name = "Blue Far")
-public class Blue2 extends AutoOpMode {
+@Autonomous(name = "Far trial")
+public class BlueFarTrial extends AutoOpMode {
     Vector2d zoneRight = new Vector2d(-40, -45.5);
     Vector2d zoneMiddle = new Vector2d(-39, -36);
-    Vector2d zoneLeft = new Vector2d(-43, -36);
+    Vector2d zoneLeft = new Vector2d(-45, -36);
     BlueFilterFar.State position = BlueFilterFar.State.NOT_FOUND;
 
 
@@ -88,8 +87,8 @@ public class Blue2 extends AutoOpMode {
                 .build();
         TrajectorySequence left = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneLeft)
-                .turn(Math.toRadians(50))
-                .forward(3.7)
+                .turn(Math.toRadians(55))
+                .forward(6.5)
                 .build();
 
         if (position == BlueFilterFar.State.RIGHT) {
@@ -114,12 +113,13 @@ public class Blue2 extends AutoOpMode {
                 .build();
 
         TrajectorySequence toReachBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .back(20)
+                .back(9)
                 .addDisplacementMarker(() -> {
                     robot.intake.raiseIntake();
                 })
-                .turn(Math.toRadians(-140))
-                .strafeLeft(55)
+                .turn(Math.toRadians(-57))
+                .forward(30)
+                .turn(Math.toRadians(-90))
                 .build();
 
         TrajectorySequence toReachBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
@@ -141,15 +141,28 @@ public class Blue2 extends AutoOpMode {
         }
 
         robot.intake.disarmIntake();
-         //
+
 
         //robot aligns to go under stage door
-        TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+        TrajectorySequence underCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(-2, -12, Math.toRadians(-90)))
                 .back(20)
                 .build();
-        robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
-
+        TrajectorySequence underRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-2, -12, Math.toRadians(-90)))
+                .back(20)
+                .build();
+        TrajectorySequence underLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .lineToLinearHeading(new Pose2d(-2, 36, Math.toRadians(-90)))
+                //.back(20)
+                .build();
+        if (position == BlueFilterFar.State.LEFT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(underLeft);
+        } else if (position == BlueFilterFar.State.CENTER) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(underCenter);
+        } else {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(underRight);
+        }
 
 
         //coordinates to correct board positioning
@@ -164,7 +177,7 @@ public class Blue2 extends AutoOpMode {
                 .build();
 
         TrajectorySequence toBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-//                .forward(2)0
+//                .forward(2)
 //                .strafeLeft(3)
 //                .back(2)
                 .lineToLinearHeading(new Pose2d(-30.5, 55, Math.toRadians(-90)))
