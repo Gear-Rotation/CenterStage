@@ -175,6 +175,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.opModes.AutoOpMode;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
+import org.firstinspires.ftc.teamcode.vision.BlueFilterFar;
 import org.firstinspires.ftc.teamcode.vision.FrameGrabberBlue;
 import org.firstinspires.ftc.teamcode.vision.BlueFilter;
 
@@ -309,7 +310,7 @@ public class Blue1 extends AutoOpMode {
         robot.timer.wait(500);
 
         robot.lift.liftToPosition(-800);
-        while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
+        while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
         }
@@ -321,16 +322,33 @@ public class Blue1 extends AutoOpMode {
         robot.lift.autoClose();
 
         robot.lift.liftToPosition(-100);
-        while(opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
+        while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
         }
 
-        TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .strafeLeft(24)
-                .build();
-        robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
 
+        //strafes right to be in the parking zone
+        TrajectorySequence parkCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .strafeRight(28.5)
+                .build();
+
+        TrajectorySequence parkLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .strafeRight(23)
+                .build();
+
+        TrajectorySequence parkRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .strafeRight(39)
+                .build();
+
+        //executes the commands from above
+        if (position == BlueFilter.State.LEFT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(parkLeft);
+        } else if (position == BlueFilter.State.CENTER) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(parkCenter);
+        } else {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(parkRight);
+        }
     }
 
     @Override

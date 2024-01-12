@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySe
 import org.firstinspires.ftc.teamcode.subsystems.Robot;
 import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed2;
 
-@Autonomous(name = "Red Far")
-public class Red2 extends AutoOpMode {
+@Autonomous(name = "Old Red Far")
+public class OldRedFar extends AutoOpMode {
     Vector2d zoneRight = new Vector2d(43, -30);
     Vector2d zoneMiddle = new Vector2d(39, -36);
     Vector2d zoneLeft = new Vector2d(43, -46);
@@ -78,7 +78,7 @@ public class Red2 extends AutoOpMode {
 //                .strafeLeft(5)
 //                .build();
 //        robot.drive.roadRunnerDrive.followTrajectorySequence(toAlign);
-         //     robot.timer.wait(5000);
+        robot.timer.wait(2000);
         int zone = 0;
         TrajectorySequence right = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneRight)
@@ -121,20 +121,12 @@ public class Red2 extends AutoOpMode {
                 .forward(30)
                 .build();
         TrajectorySequence toReachBoardRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-//                .back(9)
-//                .addDisplacementMarker(() -> {
-//                    robot.intake.raiseIntake();
-//                })
-//                .turn(Math.toRadians(147))
-//                .strafeRight(55)
-//                .build();
-                .back(7)
+                .back(20)
                 .addDisplacementMarker(() -> {
                     robot.intake.raiseIntake();
                 })
-                .turn(Math.toRadians(57))
-                .forward(26)
-                .turn(Math.toRadians(90))
+                .turn(Math.toRadians(147))
+                .strafeRight(55)
                 .build();
 
 //
@@ -151,7 +143,7 @@ public class Red2 extends AutoOpMode {
 //
         //robot aligns to go under stage door
         TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(10, 30, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(2, 12, Math.toRadians(-90)))
 //                .back(20)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
@@ -170,7 +162,7 @@ public class Red2 extends AutoOpMode {
 //                .forward(2)0
 //                .strafeLeft(3)
 //                .back(2)
-                .lineToLinearHeading(new Pose2d(49, 49, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(42.5, 49, Math.toRadians(-90)))
                 //   .back(6)
                 .build();
 
@@ -190,8 +182,7 @@ public class Red2 extends AutoOpMode {
         robot.timer.wait(500);
 
         // lift the slide to the correct position
-      //  robot.lift.liftToPosition(-1200);
-        robot.lift.liftToPosition(-800);
+        robot.lift.liftToPosition(-1200);
         while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
@@ -217,7 +208,7 @@ public class Red2 extends AutoOpMode {
         //strafes right to be in the parking zone
         TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .forward(6)
-                .lineTo(new Vector2d(12, 56))
+                .lineTo(new Vector2d(4, 56))
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
     }
@@ -237,6 +228,3 @@ public class Red2 extends AutoOpMode {
 //
 //
 //
-
-
-
