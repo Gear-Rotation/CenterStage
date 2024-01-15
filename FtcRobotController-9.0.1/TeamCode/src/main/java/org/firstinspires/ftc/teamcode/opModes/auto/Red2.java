@@ -161,7 +161,7 @@ public class Red2 extends AutoOpMode {
         robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
         //coordinates to correct board positioning
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(41, 50.5, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(45, 50.5, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
@@ -194,7 +194,7 @@ public class Red2 extends AutoOpMode {
         robot.timer.wait(500);
 
         // lift the slide to the correct position
-       robot.lift.liftToPosition(-1300);
+       robot.lift.liftToPosition(-1200);
        // robot.lift.liftToPosition(-800);
         while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());

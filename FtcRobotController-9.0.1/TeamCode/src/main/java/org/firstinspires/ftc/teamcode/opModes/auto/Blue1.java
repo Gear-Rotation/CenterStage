@@ -30,52 +30,53 @@ public class Blue1 extends AutoOpMode {
         //way to adjust camera during init before running, last minute
 
         while (!isStarted() && opModeIsActive()) {
-
-            if (gamepad1.a) {
-                fg.blueFilter.threshold += 0.001;
-            }
-            if (gamepad1.b) {
-                fg.blueFilter.threshold -= 0.001;
-            }
-
-
-            if (gamepad1.dpad_up) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() + 0.001);
-            }
-            if (gamepad1.dpad_down) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() - 0.001);
-            }
-
-            if (gamepad1.dpad_left) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() - 0.001,fg.blueFilter.offset.getY());
-            }
-
-            if (gamepad1.dpad_right) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() + 0.001,fg.blueFilter.offset.getY());
-            }
-
-            if (gamepad2.dpad_up) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
-            }
-            if (gamepad2.dpad_down) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
-            }
-
-            if (gamepad2.dpad_left) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
-            }
-
-            if (gamepad2.dpad_right) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
-            }
-
-            position = fg.blueFilter.position;
-
-            telemetry.addData("position", position);
-
-            telemetry.addData("offset", fg.blueFilter.offset);
-            telemetry.addData("offset1", fg.blueFilter.offset1);
-            telemetry.addData("threshold", fg.blueFilter.threshold);
+//
+//            if (gamepad1.a) {
+//                fg.blueFilter.threshold += 0.001;
+//            }
+//            if (gamepad1.b) {
+//                fg.blueFilter.threshold -= 0.001;
+//            }
+//
+//
+//            if (gamepad1.dpad_up) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() + 0.001);
+//            }
+//            if (gamepad1.dpad_down) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() - 0.001);
+//            }
+//
+//            if (gamepad1.dpad_left) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() - 0.001,fg.blueFilter.offset.getY());
+//            }
+//
+//            if (gamepad1.dpad_right) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() + 0.001,fg.blueFilter.offset.getY());
+//            }
+//
+//            if (gamepad2.dpad_up) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
+//            }
+//            if (gamepad2.dpad_down) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
+//            }
+//
+//            if (gamepad2.dpad_left) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
+//            }
+//
+//            if (gamepad2.dpad_right) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
+//            }
+//
+//            position = fg.blueFilter.position;
+//
+//            telemetry.addData("position", position);
+//
+//            telemetry.addData("offset", fg.blueFilter.offset);
+//            telemetry.addData("offset1", fg.blueFilter.offset1);
+//            telemetry.addData("threshold", fg.blueFilter.threshold);
+            telemetry.addData("test",position);
             telemetry.update();
         }
 
