@@ -11,10 +11,10 @@ import org.firstinspires.ftc.teamcode.vision.BlueFilter;
 import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed;
 import org.firstinspires.ftc.teamcode.vision.RedFilter;
 
-@Autonomous(name = "Old Red Close")
-public class Red1 extends AutoOpMode {
+@Autonomous(name = "Red Close")
+public class Red1Close extends AutoOpMode {
     //spike mrk positions
-    Vector2d zoneRight = new Vector2d(45, 24);
+    Vector2d zoneRight = new Vector2d(45, 24.25);
     Vector2d zoneMiddle = new Vector2d(38, 14);
     Vector2d zoneLeft = new Vector2d(45, 12);
     RedFilter.State position = RedFilter.State.NOT_FOUND;
@@ -162,12 +162,41 @@ public class Red1 extends AutoOpMode {
         }
 
         //parks the robot
-        TrajectorySequence toPark = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .forward(2)
-                .lineToLinearHeading(new Pose2d(10, 49, Math.toRadians(-90)))
-                .back(7)
+        TrajectorySequence parkCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .forward(3)
+                //park in the corner near the wall
+                //.strafeLeft(27.5)
+                //park in the diagnoal center spot
+                .strafeRight(28)
+                .back(14)
                 .build();
-        robot.drive.roadRunnerDrive.followTrajectorySequence(toPark);
+
+        TrajectorySequence parkLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .forward(3)
+                //park in the corner near the wall
+                //.strafeLeft(39)
+                //park in the diagnoal center spot
+                .strafeRight(20)
+                .back(14)
+                .build();
+
+        TrajectorySequence parkRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+                .forward(3)
+                //park in the corner near the wall
+              //  .strafeLeft(20)
+                //park in the diagnoal center spot
+                .strafeRight(37)
+                .back(14)
+                .build();
+
+        //executes the commands from above
+        if (position == RedFilter.State.LEFT) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(parkLeft);
+        } else if (position == RedFilter.State.CENTER) {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(parkCenter);
+        } else {
+            robot.drive.roadRunnerDrive.followTrajectorySequence(parkRight);
+        }
 
     }
 

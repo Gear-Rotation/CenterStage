@@ -108,7 +108,7 @@ public double threshold = 134;
 
         }
 
-//        workingMat.release();
+       workingMat.release();
 
         return workingMat;
     }
