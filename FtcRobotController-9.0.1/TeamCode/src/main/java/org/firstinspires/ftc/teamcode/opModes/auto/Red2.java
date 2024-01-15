@@ -150,7 +150,9 @@ public class Red2 extends AutoOpMode {
         }
 
         robot.intake.disarmIntake();
-//
+
+        //     robot.timer.wait(5000);
+
         //robot aligns to go under stage door
         TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToLinearHeading(new Pose2d(10, 30, Math.toRadians(-90)))
@@ -164,7 +166,7 @@ public class Red2 extends AutoOpMode {
 
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 //  .back(1)
-                .lineToLinearHeading(new Pose2d(32, 51.5, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(36, 51.5, Math.toRadians(-90)))
                 // .forward(2)
                 .build();
 
@@ -192,8 +194,8 @@ public class Red2 extends AutoOpMode {
         robot.timer.wait(500);
 
         // lift the slide to the correct position
-      //  robot.lift.liftToPosition(-1200);
-        robot.lift.liftToPosition(-800);
+       robot.lift.liftToPosition(-1300);
+       // robot.lift.liftToPosition(-800);
         while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
             telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
             telemetry.update();
@@ -217,41 +219,41 @@ public class Red2 extends AutoOpMode {
         }
 
         //parks the robot
-        TrajectorySequence parkCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .forward(3)
-                //park in the corner near the wall
-                //.strafeLeft(27.5)
-                //park in the diagnoal center spot
-                .strafeRight(26)
-                .back(14)
-                .build();
-
-        TrajectorySequence parkLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .forward(3)
-                //park in the corner near the wall
-                //.strafeLeft(39)
-                //park in the diagnoal center spot
-                .strafeRight(20)
-                .back(14)
-                .build();
-
-        TrajectorySequence parkRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .forward(3)
-                //park in the corner near the wall
-                //  .strafeLeft(20)
-                //park in the diagnoal center spot
-                .strafeRight(35)
-                .back(14)
-                .build();
-
-        //executes the commands from above
-        if (position == RedFilterFar.State.LEFT) {
-            robot.drive.roadRunnerDrive.followTrajectorySequence(parkLeft);
-        } else if (position == RedFilterFar.State.CENTER) {
-            robot.drive.roadRunnerDrive.followTrajectorySequence(parkCenter);
-        } else {
-            robot.drive.roadRunnerDrive.followTrajectorySequence(parkRight);
-        }
+//        TrajectorySequence parkCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+//                .forward(3)
+//                //park in the corner near the wall
+//                //.strafeLeft(27.5)
+//                //park in the diagnoal center spot
+//                .strafeRight(26)
+//                .back(14)
+//                .build();
+//
+//        TrajectorySequence parkLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+//                .forward(3)
+//                //park in the corner near the wall
+//                //.strafeLeft(39)
+//                //park in the diagnoal center spot
+//                .strafeRight(20)
+//                .back(14)
+//                .build();
+//
+//        TrajectorySequence parkRight = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
+//                .forward(3)
+//                //park in the corner near the wall
+//                //  .strafeLeft(20)
+//                //park in the diagnoal center spot
+//                .strafeRight(35)
+//                .back(14)
+//                .build();
+//
+//        //executes the commands from above
+//        if (position == RedFilterFar.State.LEFT) {
+//            robot.drive.roadRunnerDrive.followTrajectorySequence(parkLeft);
+//        } else if (position == RedFilterFar.State.CENTER) {
+//            robot.drive.roadRunnerDrive.followTrajectorySequence(parkCenter);
+//        } else {
+//            robot.drive.roadRunnerDrive.followTrajectorySequence(parkRight);
+//        }
     }
 
 
