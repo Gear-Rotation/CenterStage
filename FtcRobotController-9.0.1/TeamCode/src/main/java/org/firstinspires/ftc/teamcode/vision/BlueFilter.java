@@ -19,13 +19,13 @@ public class BlueFilter extends OpenCvPipeline {
     private List<Mat> channels = new ArrayList<>();
 
     //center
-    public Vector2d offset = new Vector2d(238,302);
+    public Vector2d offset = new Vector2d(238, 302);
     //right
-    public Vector2d offset1 = new Vector2d(580,278);
+    public Vector2d offset1 = new Vector2d(580, 278);
     private Mat workingMat = new Mat();
     private Mat maskMat = new Mat();
 
-public double threshold = 134;
+    public double threshold = 134;
     public double offsetAverage = 0;
     public double offset1Average = 0;
 
@@ -40,6 +40,7 @@ public double threshold = 134;
         CENTER,
         NOT_FOUND
     }
+
     public Status leftStatus = Status.NONE;
     public Status rightStatus = Status.NONE;
 
@@ -52,10 +53,10 @@ public double threshold = 134;
         input.copyTo(workingMat);
 
         Imgproc.cvtColor(workingMat, workingMat, Imgproc.COLOR_RGB2YCrCb);
-        Imgproc.GaussianBlur(workingMat, workingMat, new Size(5,5), 0);
+        Imgproc.GaussianBlur(workingMat, workingMat, new Size(5, 5), 0);
         Core.split(workingMat, channels);
 
-        if(channels.size() > 0) {
+        if (channels.size() > 0) {
             Imgproc.threshold(channels.get(2), workingMat, threshold, 255, Imgproc.THRESH_BINARY);
         }
 
@@ -85,31 +86,33 @@ public double threshold = 134;
         maskMat = workingMat.submat(new Rect((int) offset1.getX(), (int) offset1.getY(), 100, 100));
         offset1Average = Core.mean(maskMat).val[0];
 
-        if(offsetAverage >= 150) {
+        if (offsetAverage >= 150) {
             leftStatus = Status.PRESENT;
         } else {
             leftStatus = Status.NONE;
         }
 
-        if(offset1Average >= 150) {
+        if (offset1Average >= 150) {
             rightStatus = Status.PRESENT;
         } else {
             rightStatus = Status.NONE;
         }
 
-        if(rightStatus == Status.PRESENT) {
+        if (rightStatus == Status.PRESENT) {
             position = State.RIGHT;
 
-        } else if(leftStatus == Status.PRESENT) {
+        } else if (leftStatus == Status.PRESENT) {
             position = State.CENTER;
 
-        } else if(leftStatus == Status.NONE && rightStatus == Status.NONE) {
+        } else if (leftStatus == Status.NONE && rightStatus == Status.NONE) {
             position = State.LEFT;
 
         }
 
-       workingMat.release();
 
-        return workingMat;
+        workingMat.release();
+
+        return input;
+
     }
 }
