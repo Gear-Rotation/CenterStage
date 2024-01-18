@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed2;
 
 @Autonomous(name = "Red Far")
 public class Red2 extends AutoOpMode {
-    Vector2d zoneRight = new Vector2d(43, -30);
+    Vector2d zoneRight = new Vector2d(43, -28.5);
     Vector2d zoneMiddle = new Vector2d(39, -36);
     Vector2d zoneLeft = new Vector2d(43, -46);
     RedFilterFar.State position = RedFilterFar.State.NOT_FOUND;
@@ -155,13 +155,14 @@ public class Red2 extends AutoOpMode {
 
         //robot aligns to go under stage door
         TrajectorySequence toCenterRobot = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(10, 30, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(15, 30, Math.toRadians(-90)))
 //                .back(20)
                 .build();
         robot.drive.roadRunnerDrive.followTrajectorySequence(toCenterRobot);
+
         //coordinates to correct board positioning
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
-                .lineToLinearHeading(new Pose2d(45, 50.5, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(52.5, 50.5, Math.toRadians(-90)))
                 .build();
 
         TrajectorySequence toBoardLeft = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
@@ -174,7 +175,7 @@ public class Red2 extends AutoOpMode {
 //                .forward(2)0
 //                .strafeLeft(3)
 //                .back(2)
-                .lineToLinearHeading(new Pose2d(49, 53, Math.toRadians(-90)))
+                .lineToLinearHeading(new Pose2d(54.75, 57, Math.toRadians(-90)))
                 //   .back(6)
                 .build();
 

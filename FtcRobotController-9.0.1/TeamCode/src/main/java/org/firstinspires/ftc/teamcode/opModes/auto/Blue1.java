@@ -30,6 +30,7 @@ public class Blue1 extends AutoOpMode {
         //way to adjust camera during init before running, last minute
 
         while (!isStarted() && opModeIsActive()) {
+
 //
 //            if (gamepad1.a) {
 //                fg.blueFilter.threshold += 0.001;
