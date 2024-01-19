@@ -53,7 +53,7 @@ public class Intake extends Subsystem {
     }
 
     public void depositPixel() {
-        armIntake();
+        disarmIntake();
         timer.wait(500);
         timer.resetTimer();
         while(opMode.opModeIsActive() && timer.getTime() < 2000){
