@@ -26,62 +26,62 @@ public class Blue1Old extends AutoOpMode {
 
     @Override
     public void setup() {
-        FrameGrabberBlue fg = new FrameGrabberBlue(this, this.robot);
-        //way to adjust camera during init before running, last minute
-
-        while (!isStarted() && opModeIsActive()) {
-
-
-            if (gamepad1.a) {
-                fg.blueFilter.threshold += 0.001;
-            }
-            if (gamepad1.b) {
-                fg.blueFilter.threshold -= 0.001;
-            }
-
-
-            if (gamepad1.dpad_up) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() + 0.001);
-            }
-            if (gamepad1.dpad_down) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() - 0.001);
-            }
-
-            if (gamepad1.dpad_left) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() - 0.001,fg.blueFilter.offset.getY());
-            }
-
-            if (gamepad1.dpad_right) {
-                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() + 0.001,fg.blueFilter.offset.getY());
-            }
-
-            if (gamepad2.dpad_up) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
-            }
-            if (gamepad2.dpad_down) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
-            }
-
-            if (gamepad2.dpad_left) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
-            }
-
-            if (gamepad2.dpad_right) {
-                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
-            }
-
-            position = fg.blueFilter.position;
-
-            telemetry.addData("position", position);
-
-            telemetry.addData("offset", fg.blueFilter.offset);
-            telemetry.addData("offset1", fg.blueFilter.offset1);
-//            telemetry.addData("threshold", fg.blueFilter.threshold);
+//        FrameGrabberBlue fg = new FrameGrabberBlue(this, this.robot);
+//        //way to adjust camera during init before running, last minute
+//
+//        while (!isStarted() && opModeIsActive()) {
+//
+//
+//            if (gamepad1.a) {
+//                fg.blueFilter.threshold += 0.001;
+//            }
+//            if (gamepad1.b) {
+//                fg.blueFilter.threshold -= 0.001;
+//            }
+//
+//
+//            if (gamepad1.dpad_up) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() + 0.001);
+//            }
+//            if (gamepad1.dpad_down) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX(),fg.blueFilter.offset.getY() - 0.001);
+//            }
+//
+//            if (gamepad1.dpad_left) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() - 0.001,fg.blueFilter.offset.getY());
+//            }
+//
+//            if (gamepad1.dpad_right) {
+//                fg.blueFilter.offset = new Vector2d(fg.blueFilter.offset.getX() + 0.001,fg.blueFilter.offset.getY());
+//            }
+//
+//            if (gamepad2.dpad_up) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() + 0.001);
+//            }
+//            if (gamepad2.dpad_down) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX(),fg.blueFilter.offset1.getY() - 0.001);
+//            }
+//
+//            if (gamepad2.dpad_left) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() - 0.001,fg.blueFilter.offset1.getY());
+//            }
+//
+//            if (gamepad2.dpad_right) {
+//                fg.blueFilter.offset1 = new Vector2d(fg.blueFilter.offset1.getX() + 0.001,fg.blueFilter.offset1.getY());
+//            }
+//
+//            position = fg.blueFilter.position;
+//
+//            telemetry.addData("position", position);
+//
+//            telemetry.addData("offset", fg.blueFilter.offset);
+//            telemetry.addData("offset1", fg.blueFilter.offset1);
+////            telemetry.addData("threshold", fg.blueFilter.threshold);
             telemetry.addData("test",position);
             telemetry.update();
-        }
-
-        fg.closeCamera();
+//        }
+//
+//        fg.closeCamera();
     }
 
 
@@ -110,7 +110,7 @@ public class Blue1Old extends AutoOpMode {
             robot.drive.roadRunnerDrive.followTrajectorySequence(right);
         }
 
-        robot.intake.depositPixel();
+  //      robot.intake.depositPixel();
 
 
         TrajectorySequence toBoardCenter = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
@@ -133,32 +133,32 @@ public class Blue1Old extends AutoOpMode {
             robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
         }
 
-        robot.intake.disarmIntake();
+     //   robot.intake.disarmIntake();
 
         //     robot.drive.roadRunnerDrive.followTrajectorySequence(toBoard);
 
 
-        robot.drive.moveBackwardsTouchSensor();
+     //   robot.drive.moveBackwardsTouchSensor();
 
         robot.timer.wait(500);
 
-        robot.lift.liftToPosition(-800);
-        while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
-            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
-            telemetry.update();
-        }
+//        robot.lift.liftToPosition(-800);
+//        while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
+//            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
+//            telemetry.update();
+//        }
 
         robot.timer.wait(200);
 
-        robot.lift.autoDeposit();
+      //  robot.lift.autoDeposit();
         robot.timer.wait(1000);
-        robot.lift.autoClose();
+      //  robot.lift.autoClose();
 
-        robot.lift.liftToPosition(-100);
-        while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
-            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
-            telemetry.update();
-        }
+//        robot.lift.liftToPosition(-100);
+//        while (opModeIsActive() && !robot.lift.hasReachedTarget(10)) {
+//            telemetry.addData("Current Height: ", robot.lift.getCurrentPosition());
+//            telemetry.update();
+//        }
 
 
         //strafes right to be in the parking zone

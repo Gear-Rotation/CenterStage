@@ -87,7 +87,7 @@ public class Red1 extends AutoOpMode {
         TrajectorySequence left = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneLeft)
                 .turn(Math.toRadians(50))
-                .forward(4.5)
+                .forward(3)
                 .build();
         TrajectorySequence middle = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneMiddle)

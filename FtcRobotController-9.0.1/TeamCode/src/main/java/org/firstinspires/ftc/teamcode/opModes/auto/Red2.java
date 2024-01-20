@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.vision.FrameGrabberRed2;
 public class Red2 extends AutoOpMode {
     Vector2d zoneRight = new Vector2d(43, -28.5);
     Vector2d zoneMiddle = new Vector2d(39, -36);
-    Vector2d zoneLeft = new Vector2d(43, -46);
+    Vector2d zoneLeft = new Vector2d(43, -47);
     RedFilterFar.State position = RedFilterFar.State.NOT_FOUND;
 
 
@@ -83,7 +83,7 @@ public class Red2 extends AutoOpMode {
         TrajectorySequence right = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneRight)
                 .turn(Math.toRadians(-57))
-                .forward(3)
+                .forward(2)
                 .build();
         TrajectorySequence middle = robot.drive.roadRunnerDrive.trajectorySequenceBuilder(getCurrentPose())
                 .lineToConstantHeading(zoneMiddle)
