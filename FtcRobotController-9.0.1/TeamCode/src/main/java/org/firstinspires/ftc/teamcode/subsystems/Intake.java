@@ -44,13 +44,17 @@ public class Intake extends Subsystem {
         disarmIntake();
     }
 
+   //arm is the folder being down
     public void armIntake(){
         folder.setPosition(0);
     }
 
+
+    //disarm is the folder being lifted up
     public void disarmIntake() {
         folder.setPosition(0.58);
     }
+
 
     public void depositPixel() {
         disarmIntake();
@@ -86,7 +90,7 @@ public class Intake extends Subsystem {
         if(gamepad2.left_trigger > 0.25) {
             folder.setPosition(0);
         } else {
-            folder.setPosition(0.58);
+            folder.setPosition(0.5);
         }
 //        if(gamepad2.left_bumper) {
 //            folder.setPosition(0);

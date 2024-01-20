@@ -16,7 +16,7 @@ public class Lift extends Subsystem {
     private Telemetry telemetry;
     private Gamepad gamepad1;
     private Gamepad gamepad2;
-    private final int UPPER_BOUND = -2989;
+    private final int UPPER_BOUND = -2900;
     private DcMotor slide;
     private Servo block;
     private LinearOpMode opMode;
@@ -98,7 +98,7 @@ public void update() {
                 slide.setPower(0);
             } else {
                 //set the slides power to how much the joystick is being pushed from -1,1 * 0.5 power
-                slide.setPower(gamepad2.right_stick_y * 0.75);
+                slide.setPower(gamepad2.right_stick_y * 1);
             }
         }
     } else {
