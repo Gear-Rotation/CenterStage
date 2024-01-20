@@ -52,7 +52,7 @@ public class Intake extends Subsystem {
 
     //disarm is the folder being lifted up
     public void disarmIntake() {
-        folder.setPosition(0.58);
+        folder.setPosition(0.35);
     }
 
 
